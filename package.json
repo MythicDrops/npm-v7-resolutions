@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "debug": "4.3.1",
-    "type-fest": "0.18.1"
+    "type-fest": "0.21.1"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
