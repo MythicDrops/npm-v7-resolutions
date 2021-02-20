@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: Build, lint, and test on Node 14
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Turnstyle
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Install npm@7
+        run: npm i -g npm
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: "1.8"
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test -- --ci --coverage --maxWorkers=2
+
+      - name: Upload CodeCov Report
+        uses: codecov/codecov-action@v1
+
+      - name: Build
+        run: yarn build
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Install npm@7
+        run: npm i -g npm
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Run semantic-release
+        run: npx semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.ACTIONS_NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT }}
