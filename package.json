@@ -84,7 +84,7 @@
     "husky": "5.0.9",
     "is-ci": "3.0.0",
     "js-yaml": "4.0.0",
-    "pinst": "2.1.4",
+    "pinst": "2.1.6",
     "prettier": "2.2.1",
     "prettier-plugin-organize-imports": "1.1.1",
     "prettier-plugin-pkg": "0.8.0",
