@@ -62,7 +62,7 @@
     "@types/eslint": "7.2.6",
     "@types/eslint-plugin-prettier": "3.1.0",
     "@types/is-ci": "2.0.0",
-    "@types/jest": "26.0.20",
+    "@types/jest": "26.0.23",
     "@types/js-yaml": "4.0.0",
     "@types/node": "14.14.31",
     "@types/prettier": "2.2.1",
